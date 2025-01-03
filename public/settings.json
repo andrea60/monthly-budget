@@ -1,0 +1,9 @@
+{
+    "oauth": {
+        "authority": "https://auth.monzo.com/",
+        "client_id": "oauth2client_0000Api5427w8GUc9c8VSz",
+        "redirect_uri": "http://localhost:5173/sign_in_callback",
+        "response_type": "code",
+        "token_endpoint": "https://api.monzo.com/oauth2/token"
+    }   
+}
