@@ -10,6 +10,7 @@ import {
 } from "react";
 
 type AuthContext = {
+  userManager: UserManager;
   user?: User;
   login: () => void;
   logout: () => void;
@@ -68,7 +69,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   };
 
   return (
-    <Context.Provider value={{ user, login, logout }}>
+    <Context.Provider value={{ user, login, logout, userManager }}>
       {children}
     </Context.Provider>
   );
