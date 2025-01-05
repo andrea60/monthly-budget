@@ -1,4 +1,5 @@
 import { MonzoAccount, MonzoClient } from "../bank-client";
+import { TokenExpiredError } from "../errors/TokenExpiredError";
 
 type MonzoApiAccount = {
   id: string;
@@ -17,6 +18,13 @@ type MonzoApiBalance = {
   spend_today: number;
 };
 
+type MonzoApiError = {
+  code: string;
+  error: string;
+  error_description: string;
+  message: string;
+};
+
 export class LiveMonzoClient implements MonzoClient {
   constructor(private getAccessToken: () => Promise<string | undefined>) {}
 
@@ -28,10 +36,7 @@ export class LiveMonzoClient implements MonzoClient {
       },
     });
     if (!accountsResponse.ok) {
-      throw new Error(
-        "Failed to fetch Monzo accounts. Status code: " +
-          accountsResponse.status
-      );
+      await this.handleErrorResponse(accountsResponse);
     }
 
     const { accounts }: MonzoApiAccountResponse = await accountsResponse.json();
@@ -67,12 +72,20 @@ export class LiveMonzoClient implements MonzoClient {
     );
 
     if (!balanceResponse.ok) {
-      throw new Error(
-        "Failed to fetch Monzo balance. Status code: " + balanceResponse.status
-      );
+      await this.handleErrorResponse(balanceResponse);
     }
 
     const balance: MonzoApiBalance = await balanceResponse.json();
     return { ...balance, accountId };
+  };
+
+  private handleErrorResponse = async (response: Response) => {
+    if (response.status === 401) {
+      const responseMsg: MonzoApiError = await response.json();
+      if (responseMsg.code === "unauthorized.bad_access_token.expired")
+        throw new TokenExpiredError();
+    }
+
+    throw new Error(`Unexpected error from Monzo API: ${response.status}`);
   };
 }

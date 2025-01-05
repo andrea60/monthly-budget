@@ -1,10 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
 import { AppSettings } from "./settings";
 import {
   createContext,
   PropsWithChildren,
   useCallback,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import { ClientSecretConfiguration } from "./ClientSecretConfiguration";
@@ -24,24 +24,22 @@ type AppSettingsContext = {
 const Context = createContext<AppSettingsContext | undefined>(undefined);
 export const SettingsProvider = ({ children }: PropsWithChildren) => {
   const [clientSecret, setClientSecret] = useState(readClientSecret());
-  const { isSuccess, data } = useQuery({
-    queryKey: ["settings"],
-    queryFn: fetchSettings,
-    refetchInterval: undefined,
-    staleTime: undefined,
-    retry: false,
-  });
+  const [settings, setSettings] = useState<AppSettings>();
+
+  useEffect(() => {
+    fetchSettings().then(setSettings);
+  }, []);
 
   const saveClientSecret = useCallback((secret: string) => {
     storeClientSecret(secret);
     setClientSecret(secret);
   }, []);
 
-  if (!isSuccess) return <div>Loading...</div>;
+  if (!settings) return <div>Loading...</div>;
   return (
     <Context.Provider
       value={{
-        settings: data,
+        settings,
         saveClientSecret,
         clientSecret: clientSecret,
       }}
