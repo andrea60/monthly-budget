@@ -12,6 +12,7 @@ import {
 type AuthContext = {
   userManager: UserManager;
   user?: User;
+  loading: boolean;
   login: () => void;
   logout: () => void;
 };
@@ -20,6 +21,7 @@ const Context = createContext<AuthContext | undefined>(undefined);
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User>();
+  const [loading, setLoading] = useState(true);
 
   const { settings, clientSecret } = useSettings();
 
@@ -39,6 +41,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     userManager.getUser().then((user) => {
+      setLoading(false);
       if (user) {
         setUser(user);
       }
@@ -69,7 +72,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   };
 
   return (
-    <Context.Provider value={{ user, login, logout, userManager }}>
+    <Context.Provider value={{ user, login, logout, userManager, loading }}>
       {children}
     </Context.Provider>
   );
@@ -78,10 +81,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 export const useAuth = () => {
   const context = useContext(Context);
   if (!context) throw new Error("useAuth must be used within a AuthProvider");
-
+  const isAuthenticated = !!context.user && !isAccessTokenExpired(context.user);
   return {
     ...context,
-    isAuthenticated: !!context.user && !isAccessTokenExpired(context.user),
+    isAuthenticated: context.loading ? undefined : isAuthenticated,
   };
 };
 

@@ -8,6 +8,25 @@ import { SettingsProvider } from "./settings/SettingsProvider";
 import { BalanceCard } from "./balance/BalanceCard";
 import { TokenExpiredError } from "./data/errors/TokenExpiredError";
 import { PropsWithChildren, useMemo } from "react";
+import { routeTree } from "./routeTree.gen";
+import {
+  createRouter,
+  RouterProvider,
+  useNavigate,
+} from "@tanstack/react-router";
+
+const router = createRouter({
+  routeTree,
+  defaultNotFoundComponent: () => {
+    const navigate = useNavigate();
+    navigate({ to: "/balance" });
+  },
+});
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
 
 function App() {
   return (
@@ -15,7 +34,7 @@ function App() {
       <SettingsProvider>
         <AuthProvider>
           <QueryProvider>
-            <AuthenticatedArea />
+            <RouterProvider router={router} />
           </QueryProvider>
         </AuthProvider>
       </SettingsProvider>
