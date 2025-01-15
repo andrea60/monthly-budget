@@ -9,4 +9,5 @@ export type MonzoAccount = {
 
 export interface MonzoClient {
   getAccounts(): Promise<MonzoAccount[]>;
+  checkPermissions(): Promise<boolean>;
 }

@@ -1,5 +1,6 @@
 import { MonzoAccount, MonzoClient } from "../bank-client";
 import { TokenExpiredError } from "../errors/TokenExpiredError";
+import { UnpermissionedError } from "../errors/UnpermissionedError";
 
 type MonzoApiAccount = {
   id: string;
@@ -27,6 +28,14 @@ type MonzoApiError = {
 
 export class LiveMonzoClient implements MonzoClient {
   constructor(private getAccessToken: () => Promise<string | undefined>) {}
+  async checkPermissions(): Promise<boolean> {
+    try {
+      await this.getAccounts();
+      return true;
+    } catch {
+      return false;
+    }
+  }
 
   async getAccounts(): Promise<MonzoAccount[]> {
     const accessToken = await this.getAccessToken();
@@ -84,6 +93,11 @@ export class LiveMonzoClient implements MonzoClient {
       const responseMsg: MonzoApiError = await response.json();
       if (responseMsg.code === "unauthorized.bad_access_token.expired")
         throw new TokenExpiredError();
+    }
+    if (response.status === 403) {
+      const responseMsg: MonzoApiError = await response.json();
+      if (responseMsg.code === "forbidden.insufficient_permissions")
+        throw new UnpermissionedError();
     }
 
     throw new Error(`Unexpected error from Monzo API: ${response.status}`);

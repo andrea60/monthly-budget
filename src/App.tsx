@@ -14,6 +14,8 @@ import {
   RouterProvider,
   useNavigate,
 } from "@tanstack/react-router";
+import { UnpermissionedError } from "./data/errors/UnpermissionedError";
+import { usePermissions } from "./permissions/usePermissions";
 
 const router = createRouter({
   routeTree,
@@ -45,14 +47,28 @@ function App() {
 export default App;
 
 export const QueryProvider = ({ children }: PropsWithChildren) => {
-  const { logout } = useAuth();
+  const { logout, isAuthenticated } = useAuth();
+  const { setHasPermission } = usePermissions();
   const queryClient = useMemo(() => {
     return new QueryClient({
+      defaultOptions: {
+        queries: {
+          enabled: isAuthenticated,
+        },
+      },
       queryCache: new QueryCache({
+        onSuccess: () => {
+          setHasPermission(true);
+        },
         onError(error) {
           if (error instanceof TokenExpiredError) {
             console.log("Token has expired, user should log in again");
             logout();
+            return;
+          }
+          if (error instanceof UnpermissionedError) {
+            setHasPermission(false);
+            return;
           }
         },
       }),

@@ -12,6 +12,8 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginPageRouteImport } from './routes/login-page.route'
+import { Route as UserSettingsIndexImport } from './routes/user-settings/index'
+import { Route as PermissionsIndexImport } from './routes/permissions/index'
 import { Route as BalanceIndexImport } from './routes/balance/index'
 
 // Create/Update Routes
@@ -19,6 +21,18 @@ import { Route as BalanceIndexImport } from './routes/balance/index'
 const LoginPageRouteRoute = LoginPageRouteImport.update({
   id: '/login-page',
   path: '/login-page',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UserSettingsIndexRoute = UserSettingsIndexImport.update({
+  id: '/user-settings/',
+  path: '/user-settings/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PermissionsIndexRoute = PermissionsIndexImport.update({
+  id: '/permissions/',
+  path: '/permissions/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,6 +60,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BalanceIndexImport
       parentRoute: typeof rootRoute
     }
+    '/permissions/': {
+      id: '/permissions/'
+      path: '/permissions'
+      fullPath: '/permissions'
+      preLoaderRoute: typeof PermissionsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/user-settings/': {
+      id: '/user-settings/'
+      path: '/user-settings'
+      fullPath: '/user-settings'
+      preLoaderRoute: typeof UserSettingsIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -54,36 +82,51 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/login-page': typeof LoginPageRouteRoute
   '/balance': typeof BalanceIndexRoute
+  '/permissions': typeof PermissionsIndexRoute
+  '/user-settings': typeof UserSettingsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/login-page': typeof LoginPageRouteRoute
   '/balance': typeof BalanceIndexRoute
+  '/permissions': typeof PermissionsIndexRoute
+  '/user-settings': typeof UserSettingsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/login-page': typeof LoginPageRouteRoute
   '/balance/': typeof BalanceIndexRoute
+  '/permissions/': typeof PermissionsIndexRoute
+  '/user-settings/': typeof UserSettingsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/login-page' | '/balance'
+  fullPaths: '/login-page' | '/balance' | '/permissions' | '/user-settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login-page' | '/balance'
-  id: '__root__' | '/login-page' | '/balance/'
+  to: '/login-page' | '/balance' | '/permissions' | '/user-settings'
+  id:
+    | '__root__'
+    | '/login-page'
+    | '/balance/'
+    | '/permissions/'
+    | '/user-settings/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   LoginPageRouteRoute: typeof LoginPageRouteRoute
   BalanceIndexRoute: typeof BalanceIndexRoute
+  PermissionsIndexRoute: typeof PermissionsIndexRoute
+  UserSettingsIndexRoute: typeof UserSettingsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   LoginPageRouteRoute: LoginPageRouteRoute,
   BalanceIndexRoute: BalanceIndexRoute,
+  PermissionsIndexRoute: PermissionsIndexRoute,
+  UserSettingsIndexRoute: UserSettingsIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,7 +140,9 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/login-page",
-        "/balance/"
+        "/balance/",
+        "/permissions/",
+        "/user-settings/"
       ]
     },
     "/login-page": {
@@ -105,6 +150,12 @@ export const routeTree = rootRoute
     },
     "/balance/": {
       "filePath": "balance/index.tsx"
+    },
+    "/permissions/": {
+      "filePath": "permissions/index.tsx"
+    },
+    "/user-settings/": {
+      "filePath": "user-settings/index.tsx"
     }
   }
 }

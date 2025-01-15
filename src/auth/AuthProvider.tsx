@@ -68,11 +68,20 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   };
 
   const logout = () => {
+    setUser(undefined);
     userManager.signoutRedirect();
   };
 
   return (
-    <Context.Provider value={{ user, login, logout, userManager, loading }}>
+    <Context.Provider
+      value={{
+        user,
+        login,
+        logout,
+        userManager,
+        loading,
+      }}
+    >
       {children}
     </Context.Provider>
   );
