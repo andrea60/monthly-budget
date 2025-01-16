@@ -2,7 +2,12 @@
 export default {
   content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+  
+    extend: {
+      fontSize: {
+        base: "0.875rem"
+      }
+    },
   },
   plugins:[
     require('daisyui')

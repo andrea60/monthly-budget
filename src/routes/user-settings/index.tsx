@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useUserSettings } from "../../data/user-data/useUserSettings";
 import { CurrencyInput } from "../../lib/components/CurrencyInput";
-import { ScheduledExpensesEditor } from "../../lib/features/ScheduledExpensesEditor";
-import { ArrowLeftIcon, BackwardIcon } from "@heroicons/react/24/outline";
+import { ScheduledExpensesEditor } from "../../lib/features/user-settings/ScheduledExpensesEditor";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 export const Route = createFileRoute("/user-settings/")({
   component: RouteComponent,

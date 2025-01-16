@@ -1,6 +1,15 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import cn from "classnames";
 
+const integerFormat = new Intl.NumberFormat(navigator.language, {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
+});
+
+const decimalFormat = new Intl.NumberFormat(navigator.language, {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
+});
 const allowedKeys = [
   "1",
   "2",
@@ -44,12 +53,20 @@ export const NumberInput = ({
   icon,
   type,
 }: NumberInputProps) => {
-  const [currentVal, setCurrentVal] = useState(
-    value?.toFixed(type === "integer" ? 0 : undefined)
+  const formatter = useCallback(
+    (v: number | undefined) => {
+      if (!v) return undefined;
+      return type === "integer"
+        ? integerFormat.format(v)
+        : decimalFormat.format(v);
+    },
+    [type]
   );
 
+  const [currentVal, setCurrentVal] = useState(formatter(value));
+
   useEffect(() => {
-    setCurrentVal(value?.toFixed(type === "integer" ? 0 : undefined));
+    setCurrentVal(formatter(value));
   }, [value]);
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,8 +109,8 @@ export const NumberInput = ({
           value={currentVal}
           onKeyDown={handleKeyDown}
           onChange={handleChange}
-          pattern="[0-9]*"
-          inputMode="decimal"
+          pattern="[0-9.]*"
+          inputMode={type === "integer" ? "numeric" : "decimal"}
         />
         {icon && <span>{icon}</span>}
       </div>

@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 import { AuthProvider, useAuth } from "./auth/AuthProvider";
 import { SettingsProvider } from "./settings/SettingsProvider";
-import { BalanceCard } from "./balance/BalanceCard";
+import { BalanceGauge } from "./lib/features/balance/BalanceGauge";
 import { TokenExpiredError } from "./data/errors/TokenExpiredError";
 import { PropsWithChildren, useMemo } from "react";
 import { routeTree } from "./routeTree.gen";
@@ -81,5 +81,5 @@ export const QueryProvider = ({ children }: PropsWithChildren) => {
 };
 
 export const AuthenticatedArea = () => {
-  return <BalanceCard />;
+  return <BalanceGauge />;
 };

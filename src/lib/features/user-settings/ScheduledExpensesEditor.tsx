@@ -1,8 +1,8 @@
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { ScheduledExpense } from "../../data/user-data/useUserSettings";
-import { CurrencyInput } from "../components/CurrencyInput";
-import { NumberInput } from "../components/NumberInput";
-import { TextInput } from "../components/TextInput";
+import { ScheduledExpense } from "../../../data/user-data/useUserSettings";
+import { CurrencyInput } from "../../components/CurrencyInput";
+import { NumberInput } from "../../components/NumberInput";
+import { TextInput } from "../../components/TextInput";
 
 type Props = {
   values: ScheduledExpense[];
