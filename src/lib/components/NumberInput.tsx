@@ -36,7 +36,7 @@ export type NumberInputProps = {
   id: string;
   onChange: (val: number) => void;
   className?: string;
-  label: string;
+  label?: string;
   max: number;
   type: "integer" | "decimal";
   icon?: JSX.Element | string;
@@ -97,9 +97,11 @@ export const NumberInput = ({
 
   return (
     <div className={className}>
-      <label className="text-sm" htmlFor={id}>
-        {label}
-      </label>
+      {label && (
+        <label className="text-sm" htmlFor={id}>
+          {label}
+        </label>
+      )}
       <div className={cn("input input-bordered flex items-center gap-2")}>
         <input
           type="text"
