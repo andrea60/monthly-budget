@@ -2,6 +2,7 @@ import { useCurrentBalance } from "../../../data/useCurrentBalance";
 import GaugeChart from "react-gauge-component";
 import { useUserSettings } from "../../../data/user-data/useUserSettings";
 import { QueryCard } from "../../components/QueryCard";
+import { ModalTooltip } from "../../components/ModalTooltip";
 
 const numberFormat = new Intl.NumberFormat(navigator.language, {
   style: "currency",
@@ -16,42 +17,44 @@ export const BalanceGauge = () => {
   const { savingTarget } = useUserSettings();
 
   return (
-    <QueryCard query={query} title="Balance Overview">
-      {(data) => (
-        <GaugeChart
-          value={data.totalBalance}
-          minValue={0}
-          maxValue={data.maxExpendible}
-          marginInPercent={margins}
-          arc={{
-            padding: 0.02,
-            subArcs: [
-              {
-                color: "#DD4E2E",
-                tooltip: { text: "Saving" },
-                limit: savingTarget,
-              },
-              {
-                color: "#6EF849",
-                limit: data.maxExpendible,
-              },
-            ],
-          }}
-          pointer={{ type: "blob", color: "red" }}
-          type="semicircle"
-          labels={{
-            valueLabel: {
-              formatTextValue: numberFormat.format,
-            },
-            tickLabels: {
-              ticks: [{ value: savingTarget }],
-              defaultTickValueConfig: {
+    <ModalTooltip>
+      <QueryCard query={query} title="Balance Overview">
+        {(data) => (
+          <GaugeChart
+            value={data.totalBalance}
+            minValue={0}
+            maxValue={data.maxExpendible}
+            marginInPercent={margins}
+            arc={{
+              padding: 0.02,
+              subArcs: [
+                {
+                  color: "#DD4E2E",
+                  tooltip: { text: "Saving" },
+                  limit: savingTarget,
+                },
+                {
+                  color: "#6EF849",
+                  limit: data.maxExpendible,
+                },
+              ],
+            }}
+            pointer={{ type: "blob", color: "red" }}
+            type="semicircle"
+            labels={{
+              valueLabel: {
                 formatTextValue: numberFormat.format,
               },
-            },
-          }}
-        />
-      )}
-    </QueryCard>
+              tickLabels: {
+                ticks: [{ value: savingTarget }],
+                defaultTickValueConfig: {
+                  formatTextValue: numberFormat.format,
+                },
+              },
+            }}
+          />
+        )}
+      </QueryCard>
+    </ModalTooltip>
   );
 };
