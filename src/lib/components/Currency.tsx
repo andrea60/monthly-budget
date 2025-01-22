@@ -6,12 +6,12 @@ const formatter = new Intl.NumberFormat("en-GB", {
 type Props = {
   value: number;
 };
-export const Currency = ({ value }: Props) => {
+export const Currency = ({ value, ...rest }: Props) => {
   const formatted = formatter.format(value);
 
   const [integer, decimals] = formatted.split(".");
   return (
-    <span>
+    <span {...rest}>
       <span className="text-xs">£</span>
       <span className="font-bold">{integer}</span>
       {decimals ? (

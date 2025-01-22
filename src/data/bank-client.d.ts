@@ -1,10 +1,6 @@
 export type MonzoAccount = {
   id: string;
-  description: string;
-  balance: number;
-  currency: string;
-  totalBalance: number;
-  spendToday: number;
+  balanceGbp: number;
 };
 
 export interface MonzoClient {

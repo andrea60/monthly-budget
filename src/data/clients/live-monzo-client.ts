@@ -60,11 +60,8 @@ export class LiveMonzoClient implements MonzoClient {
         throw new Error(`Failed to find balance for account ${acc.id}`);
       }
       return {
-        ...acc,
-        balance: balance.balance,
-        currency: balance.currency,
-        spendToday: balance.spend_today,
-        totalBalance: balance.total_balance,
+        id: acc.id,
+        balanceGbp: balance.balance * 0.01,
       };
     });
   }

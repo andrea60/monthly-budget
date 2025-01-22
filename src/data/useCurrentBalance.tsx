@@ -11,8 +11,10 @@ export const useCurrentBalance = () => {
   const computeBalance = useCallback(
     (accounts: MonzoAccount[]) => {
       const today = new Date();
-      const totalBalance =
-        0.01 * accounts.reduce((acc, account) => acc + account.balance, 0);
+      const totalBalance = accounts.reduce(
+        (acc, account) => acc + account.balanceGbp,
+        0
+      );
 
       const futureExpenses = scheduledExpenses
         .filter((exp) => exp.dayOfMonth > today.getDate())

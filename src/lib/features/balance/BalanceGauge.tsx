@@ -16,8 +16,21 @@ export const BalanceGauge = () => {
   const query = useCurrentBalance();
   const { savingTarget } = useUserSettings();
 
+  const tooltip = (
+    <>
+      <p className="border-b border-neutral-800 mb-2 pb-2">
+        Here you can see how much of your expendible income you have spent so
+        far and how close you are to start spending your target saving amount.
+      </p>
+      <p>
+        The big number in the middle indicates how much money you can spend this
+        month before going negative
+      </p>
+    </>
+  );
+
   return (
-    <ModalTooltip>
+    <ModalTooltip tooltipHeader="An overview of your balance" tooltip={tooltip}>
       <QueryCard query={query} title="Balance Overview">
         {(data) => (
           <GaugeChart

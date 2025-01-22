@@ -11,7 +11,8 @@ export const ExpendibleProgressBar = () => {
       {match(query)
         .with({ isSuccess: true }, ({ data }) => {
           const { expendibleBalance, maxExpendible } = data;
-          const perc = (expendibleBalance / maxExpendible) * 100;
+          const perc =
+            maxExpendible > 0 ? (expendibleBalance / maxExpendible) * 100 : 0;
           return <ProgressBar perc={perc} />;
         })
         .otherwise(() => (
