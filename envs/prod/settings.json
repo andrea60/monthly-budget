@@ -1,7 +1,7 @@
 {
     "oauth": {
         "authority": "https://auth.monzo.com/",
-        "client_id": "oauth2client_0000Api5427w8GUc9c8VSz",
+        "client_id": "oauth2client_0000AqNhjlCLE6bkLqzBfm",
         "redirect_uri": "https://monthly-budget.pages.dev/sign_in_callback",
         "response_type": "code",
         "token_endpoint": "https://api.monzo.com/oauth2/token"
