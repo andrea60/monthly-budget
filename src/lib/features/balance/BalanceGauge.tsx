@@ -31,7 +31,7 @@ export const BalanceGauge = () => {
 
   return (
     <ModalTooltip tooltipHeader="An overview of your balance" tooltip={tooltip}>
-      <QueryCard query={query} title="Balance Overview">
+      <QueryCard query={query} title="Balance Overview" className="select-none">
         {(data) => (
           <GaugeChart
             value={data.totalBalance}

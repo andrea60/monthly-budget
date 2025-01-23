@@ -22,7 +22,7 @@ export const DailyExpendible = () => {
           const expendiblePerDay = expendibleBalance / remainigDays;
 
           return (
-            <div className="flex flex-row items-center">
+            <div className="flex flex-row items-center select-none">
               <p>Daily Max</p>
               <Currency
                 value={expendiblePerDay}

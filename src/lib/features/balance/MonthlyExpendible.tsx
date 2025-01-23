@@ -16,7 +16,7 @@ export const MonthlyExpendible = () => {
       <QueryCard query={query} compact>
         {({ expendibleBalance }) => {
           return (
-            <div className="flex flex-row items-center">
+            <div className="flex flex-row items-center select-none">
               <p>Monthly </p>
               <Currency value={expendibleBalance} />
             </div>
