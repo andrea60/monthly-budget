@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect, useState, useMemo, useEffect } from "react";
+import { useRef, useLayoutEffect, useState } from "react";
 import { useModal } from "./modal/ModalProvider";
 import { motion } from "motion/react";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
@@ -55,7 +55,7 @@ export const ModalTooltip = ({ children, tooltip, tooltipHeader }: Props) => {
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseLeave}
       whileTap={{ scale: modal.isOpen ? 1 : 1.2 }}
-      layout
+      layout={"position"}
       onLayoutAnimationStart={() => setIsMoving(true)}
       onLayoutAnimationComplete={() => setIsMoving(false)}
       ref={childRef}

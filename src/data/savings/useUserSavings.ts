@@ -41,10 +41,10 @@ export const useUserSavings = () => {
   );
 
   const isMissingLastMonth = useMemo(() => {
-    const lastMonth = dayjs().startOf("month").subtract(1, "month");
+    const lastMonth = dayjs().endOf("month").subtract(1, "month");
     const lastMonthKey = getKey({
       year: lastMonth.year(),
-      month: lastMonth.month(),
+      month: lastMonth.month() + 1,
     });
 
     return !(lastMonthKey in userSavings);

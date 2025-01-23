@@ -7,10 +7,8 @@ import { DailyExpendible } from "../../lib/features/balance/DailyExpendible";
 import { ExpendibleProgressBar } from "../../lib/features/balance/ExpendibleProgressBar";
 import { MonthlyExpendible } from "../../lib/features/balance/MonthlyExpendible";
 import { useUserSavings } from "../../data/savings/useUserSavings";
-import { TextInput } from "../../lib/components/TextInput";
 import { LastMonthSavingInputCard } from "../../lib/features/savings/LastMonthSavingInputCard";
 import { AnimatePresence } from "motion/react";
-import { AnimatedCheckIcon } from "../../lib/components/AnimatedCheckIcon";
 
 export const Route = createFileRoute("/balance/")({
   component: RouteComponent,

@@ -1,9 +1,9 @@
-import { ArchiveBoxIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
+import { ArchiveBoxIcon } from "@heroicons/react/24/outline";
 import { CurrencyInput } from "../../components/CurrencyInput";
 import { forwardRef, useState } from "react";
 import { useUserSavings } from "../../../data/savings/useUserSavings";
 import dayjs from "dayjs";
-import { AnimatePresence, motion, useIsPresent } from "motion/react";
+import { motion } from "motion/react";
 import cn from "classnames";
 import { AnimatedCheckIcon } from "../../components/AnimatedCheckIcon";
 
@@ -14,10 +14,10 @@ export const LastMonthSavingInputCard = forwardRef<HTMLDivElement>(
     const handleSave = () => {
       if (value === undefined) return;
 
-      const lastMonth = dayjs().startOf("month").subtract(1, "month");
+      const lastMonth = dayjs().endOf("month").subtract(1, "month");
 
       replaceUserSaving({
-        month: lastMonth.month(),
+        month: lastMonth.month() + 1,
         year: lastMonth.year(),
         saved: value,
       });
@@ -32,7 +32,7 @@ export const LastMonthSavingInputCard = forwardRef<HTMLDivElement>(
         transition={{
           delay: 2,
           ease: "easeIn",
-          duration: 0.5,
+          duration: 0.2,
           times: [0, 0.4, 1],
         }}
         ref={ref}
@@ -46,7 +46,7 @@ export const LastMonthSavingInputCard = forwardRef<HTMLDivElement>(
         >
           <div className="card-body p-6 h-52 flex-col justify-center">
             {isMissingLastMonth ? (
-              <motion.div exit={{ opacity: 0 }}>
+              <motion.div exit={{ opacity: 0 }} className="flex flex-col gap-2">
                 <h1 className="card-title text-primary-content">
                   Hey 👋 How much did you save last month?
                 </h1>
