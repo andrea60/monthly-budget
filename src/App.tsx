@@ -32,7 +32,7 @@ declare module "@tanstack/react-router" {
 
 function App() {
   return (
-    <main className="p-5">
+    <main className="p-5 select-none">
       <SettingsProvider>
         <AuthProvider>
           <QueryProvider>
@@ -78,8 +78,4 @@ export const QueryProvider = ({ children }: PropsWithChildren) => {
   return (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
-};
-
-export const AuthenticatedArea = () => {
-  return <BalanceGauge />;
 };

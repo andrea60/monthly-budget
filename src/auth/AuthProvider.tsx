@@ -93,6 +93,7 @@ export const useAuth = () => {
   const isAuthenticated = !!context.user && !isAccessTokenExpired(context.user);
   return {
     ...context,
+    tokenExpiresAt: context.user?.expires_at,
     isAuthenticated: context.loading ? undefined : isAuthenticated,
   };
 };
