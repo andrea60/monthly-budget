@@ -23,8 +23,13 @@ export const onRequest: PagesFunction<Env> = async (context) => {
   const secretKey = "client_secret_" + username;
   const clientSecret = context.env[secretKey] || "";
 
-  const responsebBody = { clientSecret };
-  return new Response(JSON.stringify(responsebBody));
+  const responseBody = { clientSecret };
+
+  return new Response(JSON.stringify(responseBody), {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };
 
 const parseAuthHeader = (header: string): [string, string] => {
