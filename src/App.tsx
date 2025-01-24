@@ -5,7 +5,6 @@ import {
 } from "@tanstack/react-query";
 import { AuthProvider, useAuth } from "./auth/AuthProvider";
 import { SettingsProvider } from "./settings/SettingsProvider";
-import { BalanceGauge } from "./lib/features/balance/BalanceGauge";
 import { TokenExpiredError } from "./data/errors/TokenExpiredError";
 import { PropsWithChildren, useMemo } from "react";
 import { routeTree } from "./routeTree.gen";

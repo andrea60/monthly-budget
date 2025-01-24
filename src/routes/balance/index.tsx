@@ -1,7 +1,5 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useAuth } from "../../auth/AuthProvider";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { BalanceGauge } from "../../lib/features/balance/BalanceGauge";
-import { usePermissions } from "../../permissions/usePermissions";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { DailyExpendible } from "../../lib/features/balance/DailyExpendible";
 import { ExpendibleProgressBar } from "../../lib/features/balance/ExpendibleProgressBar";
@@ -9,24 +7,14 @@ import { MonthlyExpendible } from "../../lib/features/balance/MonthlyExpendible"
 import { useUserSavings } from "../../data/savings/useUserSavings";
 import { LastMonthSavingInputCard } from "../../lib/features/savings/LastMonthSavingInputCard";
 import { AnimatePresence } from "motion/react";
+import { protectedRoute } from "../../auth/protectedRoute";
 
 export const Route = createFileRoute("/balance/")({
-  component: RouteComponent,
+  component: protectedRoute(RouteComponent),
 });
 
 function RouteComponent() {
-  const { isAuthenticated } = useAuth();
-  const { hasPermission } = usePermissions();
-  const navigate = useNavigate();
   const { isMissingLastMonth } = useUserSavings();
-  if (isAuthenticated === false) {
-    navigate({ to: "/login-page" });
-    return;
-  }
-  if (!hasPermission) {
-    navigate({ to: "/permissions" });
-    return;
-  }
   return (
     <>
       <section className="flex w-full justify-between mb-6 items-center">
