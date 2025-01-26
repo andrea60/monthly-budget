@@ -1,4 +1,4 @@
-import { User, UserManager } from "oidc-client-ts";
+import { User, UserManager, WebStorageStateStore } from "oidc-client-ts";
 import { useSettings } from "../settings/SettingsProvider";
 import {
   createContext,
@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
           authorization_endpoint: settings.oauth.authority,
           token_endpoint: settings.oauth.token_endpoint,
         },
+        userStore: new WebStorageStateStore({ store: window.localStorage }),
       }),
     []
   );

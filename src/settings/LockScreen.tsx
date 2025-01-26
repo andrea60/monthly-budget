@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import cn from "classnames";
 import { useClientSecret } from "./ClientSecretProvider";
 import { useAnimate } from "motion/react";
+import { LockClosedIcon } from "@heroicons/react/24/outline";
 const keys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
 const PASSCODE_LENGTH = 6;
@@ -38,7 +39,9 @@ export const LockScreen = () => {
     [passCode]
   );
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col items-center gap-6">
+      <LockClosedIcon className="size-20" />
+      <p>Enter your PIN to unlock this data</p>
       <div className="flex justify-center gap-2" ref={scope}>
         {code}
       </div>
