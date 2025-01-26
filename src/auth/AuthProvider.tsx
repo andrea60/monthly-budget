@@ -8,6 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { useClientSecret } from "../settings/ClientSecretProvider";
 
 type AuthContext = {
   userManager: UserManager;
@@ -23,7 +24,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState(true);
 
-  const { settings, clientSecret } = useSettings();
+  const { settings } = useSettings();
+  const { clientSecret } = useClientSecret();
+  if (!clientSecret)
+    throw new Error(
+      "Unable to initialize AuthProvider is clientSecret is still undefined"
+    );
 
   const userManager = useMemo(
     () =>

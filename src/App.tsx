@@ -15,6 +15,7 @@ import {
 } from "@tanstack/react-router";
 import { UnpermissionedError } from "./data/errors/UnpermissionedError";
 import { usePermissions } from "./permissions/usePermissions";
+import { ClientSecretProvider } from "./settings/ClientSecretProvider";
 
 const router = createRouter({
   routeTree,
@@ -33,11 +34,13 @@ function App() {
   return (
     <main className="p-5 select-none">
       <SettingsProvider>
-        <AuthProvider>
-          <QueryProvider>
-            <RouterProvider router={router} />
-          </QueryProvider>
-        </AuthProvider>
+        <ClientSecretProvider>
+          <AuthProvider>
+            <QueryProvider>
+              <RouterProvider router={router} />
+            </QueryProvider>
+          </AuthProvider>
+        </ClientSecretProvider>
       </SettingsProvider>
     </main>
   );

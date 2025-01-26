@@ -1,5 +1,17 @@
 type Env = Record<string, string>;
 
+export const onRequestOptions: PagesFunction = async () => {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "*",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Max-Age": "86400",
+    },
+  });
+};
+
 export const onRequest: PagesFunction<Env> = async (context) => {
   const authHeader = context.request.headers.get("Authorization");
   if (!authHeader)
@@ -28,6 +40,8 @@ export const onRequest: PagesFunction<Env> = async (context) => {
   return new Response(JSON.stringify(responseBody), {
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Max-Age": "86400",
     },
   });
 };

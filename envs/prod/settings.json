@@ -5,5 +5,6 @@
         "redirect_uri": "https://monthly-budget.pages.dev/sign_in_callback",
         "response_type": "code",
         "token_endpoint": "https://api.monzo.com/oauth2/token"
-    }   
+    },
+    "secretsApi": "https://monthly-budget.pages.dev"
 }
