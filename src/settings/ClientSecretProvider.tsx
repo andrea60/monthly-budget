@@ -22,6 +22,8 @@ export const ClientSecretProvider = ({ children }: PropsWithChildren) => {
       setClientSecret(secret);
     } catch {
       return false;
+    } finally {
+      setIsLoading(false);
     }
     return true;
   };

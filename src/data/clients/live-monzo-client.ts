@@ -88,7 +88,12 @@ export class LiveMonzoClient implements MonzoClient {
   private handleErrorResponse = async (response: Response) => {
     if (response.status === 401) {
       const responseMsg: MonzoApiError = await response.json();
-      if (responseMsg.code === "unauthorized.bad_access_token.expired")
+      if (
+        [
+          "unauthorized.bad_access_token.expired",
+          "unauthorized.bad_access_token.evicted",
+        ].includes(responseMsg.code)
+      )
         throw new TokenExpiredError();
     }
     if (response.status === 403) {

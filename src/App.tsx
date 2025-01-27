@@ -64,7 +64,6 @@ export const QueryProvider = ({ children }: PropsWithChildren) => {
         },
         onError(error) {
           if (error instanceof TokenExpiredError) {
-            console.log("Token has expired, user should log in again");
             logout();
             return;
           }

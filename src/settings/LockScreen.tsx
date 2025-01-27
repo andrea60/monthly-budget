@@ -24,6 +24,7 @@ export const LockScreen = () => {
           { duration: 0.5 }
         );
         setPassCode("");
+        navigator.vibrate([200]);
       }
     }
   };
@@ -41,11 +42,11 @@ export const LockScreen = () => {
   return (
     <div className="flex flex-col items-center gap-6">
       <LockClosedIcon className="size-20" />
-      <p>Enter your PIN to unlock this data</p>
+      {!isLoading ? <p>Enter your PIN to use this app</p> : <p>Unlocking...</p>}
       <div className="flex justify-center gap-2" ref={scope}>
         {code}
       </div>
-      <p className="flex flex-wrap justify-center">
+      <div className="flex flex-wrap justify-center">
         {keys.map((k) => (
           <KeyButton
             key={k}
@@ -54,7 +55,7 @@ export const LockScreen = () => {
             disabled={isLoading}
           />
         ))}
-      </p>
+      </div>
     </div>
   );
 };
@@ -64,7 +65,7 @@ type Props = {
   onClick: () => void;
   disabled: boolean;
 };
-const KeyButton = ({ value, onClick }: Props) => {
+const KeyButton = ({ value, onClick, disabled }: Props) => {
   const timer = useRef<number | null>(null);
   const [clicked, setClicked] = useState(false);
 
@@ -82,6 +83,7 @@ const KeyButton = ({ value, onClick }: Props) => {
           "border-primary": clicked,
           "text-primary": clicked,
         })}
+        disabled={disabled}
         onClick={handleClick}
       >
         {value}
